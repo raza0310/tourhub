@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚐 TourHub - A+ Grade Graduation Project
 
-## Getting Started
+TourHub is a premium, full-stack adventure booking platform designed specifically for the Pakistani travel market. It features a modern design, high-grade security, and atomic booking transactions to ensure a market-ready experience.
 
-First, run the development server:
+## 🚀 Killer Features
+- **Bus Seat Selection**: Interactive, bus-style layout for seat selection.
+- **Dynamic Pricing (Fuel Multiplier)**: Operators can adjust prices platform-wide based on fuel inflation.
+- **Local Payment Support**: Integrated UI for Easypaisa, JazzCash, and NayaPay.
+- **Partial Payment Logic**: Users can pay a 20% deposit to lock seats.
+- **Security Verification**: Mandatory CNIC and emergency contact collection.
+- **AI Trip Planner**: Intelligent itinerary generation for custom adventures.
 
+## 🛠️ Tech Stack
+- **Framework**: Next.js 15 (App Router)
+- **Database**: Supabase / PostgreSQL
+- **ORM**: Prisma
+- **Auth**: Auth.js / NextAuth (Role-based: Admin, Operator, User)
+- **Styling**: Tailwind CSS & Shadcn UI
+- **Icons**: Lucide React & Custom Brand SVGs
+
+## 📦 Installation & Setup
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/raza0310/tourhub.git
+cd tourhub
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+# or
+pnpm install
+```
+
+### 3. Setup Environment Variables
+Create a `.env` file in the root directory:
+```env
+DATABASE_URL="your_postgresql_url"
+DIRECT_URL="your_direct_database_url"
+NEXTAUTH_SECRET="your_secret"
+NEXTAUTH_URL="http://localhost:3000"
+```
+
+### 4. Database Initialization
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+### 5. Run Development Server
 ```bash
 npm run dev
 # or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🏗️ Architecture
+- `/src/app`: App router and API endpoints.
+- `/src/components`: Reusable UI components and complex wizards.
+- `/prisma`: Database schema and migration logic.
+- `/src/lib`: Database client and shared utilities.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛡️ License
+This project is for educational/graduation purposes. All rights reserved.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+Made with ❤️ in Pakistan 🇵🇰
