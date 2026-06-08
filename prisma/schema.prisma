@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  USER
+  OPERATOR
+  ADMIN
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+enum OperatorStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+model User {
+  id        String    @id @default(cuid())
+  name      String?
+  email     String    @unique
+  password  String?   
+  role      Role      @default(USER)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  operator  Operator?
+  bookings  Booking[]
+  reviews   Review[]
+}
+
+model Operator {
+  id          String         @id @default(cuid())
+  companyName String
+  status      OperatorStatus @default(PENDING)
+  ownerId     String         @unique
+  user        User           @relation(fields: [ownerId], references: [id])
+  trips          Trip[]
+  fuelMultiplier Decimal @default(1.0)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model Trip {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @default("")
+  destination String
+  price       Float
+  duration    String
+  capacity    Int
+  operatorId  String
+  operator    Operator @relation(fields: [operatorId], references: [id])
+  bookings    Booking[]
+  reviews     Review[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Booking {
+  id        String        @id @default(cuid())
+  tripId    String
+  trip      Trip          @relation(fields: [tripId], references: [id])
+  userId    String
+  user      User          @relation(fields: [userId], references: [id])
+  seats            String[]      
+  cnic            String?
+  emergencyContact String?
+  depositAmount    Float?
+  status           BookingStatus @default(PENDING)
+  payment          Payment?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+}
+
+model SeatLock {
+  id        String   @id @default(cuid())
+  tripId    String
+  seat      String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@unique([tripId, seat])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int
+  comment   String
+  tripId    String
+  trip      Trip     @relation(fields: [tripId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Payment {
+  id        String   @id @default(cuid())
+  amount    Float
+  status    String   
+  bookingId String   @unique
+  booking   Booking  @relation(fields: [bookingId], references: [id])
+  createdAt DateTime @default(now())
+}
